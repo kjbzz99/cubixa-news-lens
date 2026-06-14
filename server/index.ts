@@ -274,7 +274,7 @@ async function startServer() {
 
   // SPA fallback
   app.get("*", (req, res) => {
-    if (distPath) { res.sendFile(path.join(distPath, "index.html")); } else { res.status(500).send("Frontend build not found"); }
+    if (distPath) { if (distPath) { res.sendFile(path.join(distPath, "index.html")); } else { res.status(500).send("Frontend build not found"); } } else { res.status(500).send("Frontend build not found"); }
   });
 
   const port = Number(process.env.PORT) || 3000;
@@ -294,5 +294,6 @@ async function startServer() {
 }
 
 startServer().catch(console.error);
+
 
 
