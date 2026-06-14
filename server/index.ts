@@ -1,4 +1,4 @@
-import express from "express";
+﻿import express from "express";
 import { createServer } from "http";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -49,32 +49,32 @@ async function invokeLLM(messages: ChatMessage[]): Promise<string> {
 }
 
 async function analyzeArticle(text: string): Promise<any> {
-  const systemPrompt = `당신은 뉴스 기사의 신뢰도를 평가하는 AI 분석 전문가입니다.
-다음 10개 항목을 JSON 형식으로 평가하세요:
-1. overall: 종합 신뢰도 (0-100)
-2. source_credibility: 출처 신뢰도 (0-100)
-3. headline_body_match: 제목과 본문 일치도 (0-100)
-4. emotional_language: 감정적 표현/선동성 (0-100, 낮을수록 좋음)
-5. fact_opinion_distinction: 사실 주장과 의견 구분 (0-100)
-6. evidence_presence: 근거/인용/수치 존재 여부 (0-100)
-7. exaggeration_absoluteness: 과장/단정 표현 (0-100, 낮을수록 좋음)
-8. political_commercial_bias: 정치적·상업적 편향 가능성 (0-100, 낮을수록 좋음)
-9. logical_fallacy: 논리적 비약 여부 (0-100, 낮을수록 좋음)
-10. final_judgment: 최종 판단 (0-100)
+  const systemPrompt = `?뱀떊? ?댁뒪 湲곗궗???좊ː?꾨? ?됯??섎뒗 AI 遺꾩꽍 ?꾨Ц媛?낅땲??
+?ㅼ쓬 10媛???ぉ??JSON ?뺤떇?쇰줈 ?됯??섏꽭??
+1. overall: 醫낇빀 ?좊ː??(0-100)
+2. source_credibility: 異쒖쿂 ?좊ː??(0-100)
+3. headline_body_match: ?쒕ぉ怨?蹂몃Ц ?쇱튂??(0-100)
+4. emotional_language: 媛먯젙???쒗쁽/?좊룞??(0-100, ??쓣?섎줉 醫뗭쓬)
+5. fact_opinion_distinction: ?ъ떎 二쇱옣怨??섍껄 援щ텇 (0-100)
+6. evidence_presence: 洹쇨굅/?몄슜/?섏튂 議댁옱 ?щ? (0-100)
+7. exaggeration_absoluteness: 怨쇱옣/?⑥젙 ?쒗쁽 (0-100, ??쓣?섎줉 醫뗭쓬)
+8. political_commercial_bias: ?뺤튂?겶룹긽?낆쟻 ?명뼢 媛?μ꽦 (0-100, ??쓣?섎줉 醫뗭쓬)
+9. logical_fallacy: ?쇰━??鍮꾩빟 ?щ? (0-100, ??쓣?섎줉 醫뗭쓬)
+10. final_judgment: 理쒖쥌 ?먮떒 (0-100)
 
-또한 다음을 제공하세요:
-- summary: 한 줄 요약
-- risk_signals: 위험 신호 3개 (배열)
-- reliable_elements: 신뢰 가능한 요소 3개 (배열)
-- recommendations: 추가 검증 건의
-- trust_grade: 최종 신뢰도 등급 (A+, A, B+, B, C+, C, D+, D, F)
+?먰븳 ?ㅼ쓬???쒓났?섏꽭??
+- summary: ??以??붿빟
+- risk_signals: ?꾪뿕 ?좏샇 3媛?(諛곗뿴)
+- reliable_elements: ?좊ː 媛?ν븳 ?붿냼 3媛?(諛곗뿴)
+- recommendations: 異붽? 寃利?嫄댁쓽
+- trust_grade: 理쒖쥌 ?좊ː???깃툒 (A+, A, B+, B, C+, C, D+, D, F)
 
-JSON만 반환하세요.`;
+JSON留?諛섑솚?섏꽭??`;
 
   try {
     const response = await invokeLLM([
       { role: "system", content: systemPrompt },
-      { role: "user", content: `다음 기사를 분석해주세요:\n\n${text}` },
+      { role: "user", content: `?ㅼ쓬 湲곗궗瑜?遺꾩꽍?댁＜?몄슂:\n\n${text}` },
     ]);
 
     const jsonMatch = response.match(/\{[\s\S]*\}/);
@@ -152,8 +152,8 @@ async function startServer() {
   const distPath = path.join(__dirname, "../dist/client");
   app.use(express.static(distPath));
 
-  // ── News analysis ────────────────────────────────────────────────────────
-  // GET /api/feed?limit=NN  →  Fetch latest articles from database
+  // ?? News analysis ????????????????????????????????????????????????????????
+  // GET /api/feed?limit=NN  ?? Fetch latest articles from database
   app.get("/api/feed", async (req, res) => {
     try {
       const limitRaw = String(req.query.limit ?? "30");
@@ -192,7 +192,7 @@ async function startServer() {
     }
   });
 
-  // POST /api/feed/refresh  →  Trigger manual RSS fetch
+  // POST /api/feed/refresh  ?? Trigger manual RSS fetch
   app.post("/api/feed/refresh", async (_req, res) => {
     try {
       await triggerRSSFetch();
@@ -203,7 +203,7 @@ async function startServer() {
     }
   });
 
-  // POST /api/analyze  →  Internal 9-agent analysis pipeline
+  // POST /api/analyze  ?? Internal 9-agent analysis pipeline
   app.post("/api/analyze", async (req, res) => {
     const { text, url } = req.body || {};
 
@@ -232,7 +232,7 @@ async function startServer() {
             }
           }
         } catch {
-          articleText = `URL: ${url}\n본문을 붙여넣기 모드로 분석해주세요.`;
+          articleText = `URL: ${url}\n蹂몃Ц??遺숈뿬?ｊ린 紐⑤뱶濡?遺꾩꽍?댁＜?몄슂.`;
         }
       }
 
@@ -249,7 +249,7 @@ async function startServer() {
     }
   });
 
-  // GET /api/r/:shareId  →  Placeholder for shared results
+  // GET /api/r/:shareId  ?? Placeholder for shared results
   app.get("/api/r/:shareId", async (req, res) => {
     res.json({ result: null });
   });
@@ -259,9 +259,9 @@ async function startServer() {
     res.sendFile(path.join(distPath, "index.html"));
   });
 
-  const port = process.env.PORT || 3000;
-  server.listen(port, () => {
-    console.log(`[Server] Running on http://localhost:${port}/`);
+  const port = Number(process.env.PORT) || 3000;
+  server.listen(port, "0.0.0.0", () => {
+    console.log(`[Server] Running on http://0.0.0.0:${port}/`);
     console.log(`[Analysis Engine] ${FORGE_BASE && FORGE_KEY ? "ENABLED" : "DISABLED"}`);
     console.log(`[RSS Scheduler] ENABLED`);
   });
@@ -276,3 +276,4 @@ async function startServer() {
 }
 
 startServer().catch(console.error);
+
