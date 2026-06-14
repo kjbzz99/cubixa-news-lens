@@ -149,8 +149,26 @@ async function startServer() {
   }
 
   // Serve static files (Vite build output)
-  const distPath = path.join(__dirname, "../dist/client");
-  app.use(express.static(distPath));
+  const staticCandidates = [
+    path.join(__dirname, "client"),
+    path.join(__dirname, "public"),
+    path.join(__dirname),
+    path.resolve(process.cwd(), "dist/client"),
+    path.resolve(process.cwd(), "dist/public"),
+    path.resolve(process.cwd(), "dist"),
+    path.resolve(process.cwd(), "client/dist"),
+  ];
+
+  const distPath = staticCandidates.find((dir) =>
+    fs.existsSync(path.join(dir, "index.html"))
+  );
+
+  if (!distPath) {
+    console.error("[Static] index.html not found in candidates:", staticCandidates);
+  } else {
+    console.log("[Static] Serving frontend from", distPath);
+    app.use(express.static(distPath));
+  }
 
   // ?? News analysis ????????????????????????????????????????????????????????
   // GET /api/feed?limit=NN  ?? Fetch latest articles from database
@@ -256,7 +274,7 @@ async function startServer() {
 
   // SPA fallback
   app.get("*", (req, res) => {
-    res.sendFile(path.join(distPath, "index.html"));
+    if (distPath) { res.sendFile(path.join(distPath, "index.html")); } else { res.status(500).send("Frontend build not found"); }
   });
 
   const port = Number(process.env.PORT) || 3000;
@@ -276,4 +294,5 @@ async function startServer() {
 }
 
 startServer().catch(console.error);
+
 
