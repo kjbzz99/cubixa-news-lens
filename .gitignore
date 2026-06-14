@@ -1,0 +1,12 @@
+
+.project-config.json
+
+*.env
+
+.env
+
+.env.local
+
+node_modules/
+
+.venv/

@@ -1,0 +1,398 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * ============================================================
+ * Cubixa News Lens — Quiet Authority Design System
+ * ============================================================
+ * Style references for files that consume these tokens:
+ *  - Background: warm mist white with subtle violet hue
+ *  - Text: ink slate (deep cool charcoal)
+ *  - Accent: cubixa violet (used sparingly, for score + CTA)
+ *  - No harsh borders → use 1px lavender hairlines + soft shadows
+ *  - Typography pairing:
+ *      Headings/score numbers → Fraunces (serif, 600-700)
+ *      Body / Korean → Pretendard Variable
+ *      UTTA AI wordmark → Space Grotesk 700 + tracking 0.16em
+ *      Mono / metrics → JetBrains Mono
+ *  - Generous whitespace; floating cards over full-bleed blocks
+ *  - Animation: 180-240ms ease-out; press scale(0.97); halo glow
+ * ============================================================
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-display: "Fraunces", "Pretendard Variable", ui-serif, Georgia, serif;
+  --font-sans: "Pretendard Variable", "Pretendard", -apple-system,
+    BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mark: "Space Grotesk", "Pretendard Variable", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+:root {
+  /* Quiet Authority palette */
+  --background: oklch(0.985 0.008 295);
+  --foreground: oklch(0.22 0.03 280);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.03 280);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.03 280);
+
+  --primary: oklch(0.58 0.22 295);
+  --primary-foreground: oklch(0.99 0.005 295);
+
+  --secondary: oklch(0.96 0.025 295);
+  --secondary-foreground: oklch(0.32 0.05 295);
+
+  --muted: oklch(0.96 0.012 295);
+  --muted-foreground: oklch(0.5 0.025 285);
+
+  --accent: oklch(0.94 0.04 295);
+  --accent-foreground: oklch(0.32 0.08 295);
+
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.99 0.005 25);
+
+  --border: oklch(0.92 0.012 295);
+  --input: oklch(0.94 0.012 295);
+  --ring: oklch(0.58 0.22 295);
+
+  /* Chart colors — calm violet ramp + complementary forest for safe signal */
+  --chart-1: oklch(0.58 0.22 295);
+  --chart-2: oklch(0.7 0.18 305);
+  --chart-3: oklch(0.78 0.12 285);
+  --chart-4: oklch(0.55 0.12 155);
+  --chart-5: oklch(0.6 0.22 25);
+
+  --sidebar: oklch(0.985 0.008 295);
+  --sidebar-foreground: oklch(0.22 0.03 280);
+  --sidebar-primary: oklch(0.58 0.22 295);
+  --sidebar-primary-foreground: oklch(0.99 0.005 295);
+  --sidebar-accent: oklch(0.94 0.04 295);
+  --sidebar-accent-foreground: oklch(0.32 0.08 295);
+  --sidebar-border: oklch(0.92 0.012 295);
+  --sidebar-ring: oklch(0.58 0.22 295);
+
+  --radius: 1rem;
+
+  /* Cubixa-specific surface tokens (light) */
+  --cnl-card-edge: oklch(0.92 0.012 295);
+  --cnl-card-shadow-strong: oklch(0.55 0.18 295 / 0.18);
+  --cnl-card-shadow-soft: oklch(0.55 0.18 295 / 0.08);
+  --cnl-mist-1: oklch(0.93 0.06 295 / 0.65);
+  --cnl-mist-2: oklch(0.92 0.05 305 / 0.55);
+}
+
+.dark {
+  --background: oklch(0.16 0.025 285);
+  --foreground: oklch(0.92 0.01 295);
+  --card: oklch(0.22 0.03 285);
+  --card-foreground: oklch(0.92 0.01 295);
+  --popover: oklch(0.22 0.03 285);
+  --popover-foreground: oklch(0.92 0.01 295);
+  --primary: oklch(0.7 0.22 295);
+  --primary-foreground: oklch(0.16 0.025 285);
+  --secondary: oklch(0.28 0.04 285);
+  --secondary-foreground: oklch(0.85 0.02 295);
+  --muted: oklch(0.28 0.025 285);
+  --muted-foreground: oklch(0.65 0.025 285);
+  --accent: oklch(0.32 0.06 295);
+  --accent-foreground: oklch(0.92 0.01 295);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.99 0.005 25);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.7 0.22 295);
+
+  /* Cubixa-specific surface tokens (dark) */
+  --cnl-card-edge: oklch(1 0 0 / 6%);
+  --cnl-card-shadow-strong: oklch(0 0 0 / 0.5);
+  --cnl-card-shadow-soft: oklch(0 0 0 / 0.3);
+  --cnl-mist-1: oklch(0.45 0.18 295 / 0.32);
+  --cnl-mist-2: oklch(0.4 0.16 305 / 0.28);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html,
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "tnum";
+    letter-spacing: -0.01em;
+    line-height: 1.55;
+  }
+  body {
+    /* iOS safe area aware */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  .font-mark {
+    font-family: var(--font-mark);
+  }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  a[href] {
+    @apply cursor-pointer;
+    transition: transform 160ms var(--ease-out),
+      background-color 200ms var(--ease-out),
+      color 200ms var(--ease-out), opacity 200ms var(--ease-out);
+  }
+  button:not(:disabled):active,
+  [role="button"]:not([aria-disabled="true"]):active {
+    transform: scale(0.97);
+  }
+  /* Selection */
+  ::selection {
+    background: oklch(0.85 0.1 295);
+    color: oklch(0.22 0.03 280);
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  /* Floating soft card */
+  .cnl-card {
+    background: var(--card);
+    border-radius: 1.25rem;
+    box-shadow:
+      0 1px 0 var(--cnl-card-edge),
+      0 12px 32px -16px var(--cnl-card-shadow-strong),
+      0 4px 12px -8px var(--cnl-card-shadow-soft);
+  }
+
+  /* Halo glow behind score */
+  .cnl-halo {
+    position: relative;
+  }
+  .cnl-halo::before {
+    content: "";
+    position: absolute;
+    inset: -28%;
+    background: radial-gradient(
+      closest-side,
+      oklch(0.7 0.22 295 / 0.22),
+      transparent 70%
+    );
+    filter: blur(28px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Wordmark */
+  .cnl-wordmark {
+    font-family: var(--font-mark);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  /* Mist gradient page background */
+  .cnl-mist {
+    background:
+      radial-gradient(
+        1200px 600px at 100% -10%,
+        var(--cnl-mist-1),
+        transparent 60%
+      ),
+      radial-gradient(
+        900px 500px at -10% 110%,
+        var(--cnl-mist-2),
+        transparent 60%
+      ),
+      var(--background);
+  }
+
+  /* Hairline divider */
+  .cnl-hairline {
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Animated dots loader */
+  .cnl-dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+  .cnl-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--primary);
+    opacity: 0.25;
+    animation: cnl-dot 1.2s var(--ease-in-out) infinite;
+  }
+  .cnl-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .cnl-dots span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  .cnl-dots span:nth-child(4) {
+    animation-delay: 0.45s;
+  }
+
+  @keyframes cnl-dot {
+    0%,
+    60%,
+    100% {
+      opacity: 0.25;
+      transform: translateY(0);
+    }
+    30% {
+      opacity: 1;
+      transform: translateY(-3px);
+    }
+  }
+
+  /* AnalyzingOverlay — visualization keyframes */
+  @keyframes cnl-cube-spin {
+    0% {
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(180deg) scale(1.04);
+    }
+    100% {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+  @keyframes cnl-cube-glow {
+    0%,
+    100% {
+      opacity: 0.55;
+    }
+    50% {
+      opacity: 0.95;
+    }
+  }
+  @keyframes cnl-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.85;
+    }
+    50% {
+      transform: scale(1.18);
+      opacity: 1;
+    }
+  }
+  @keyframes cnl-node-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  /* Install prompt slides up from the bottom safe-area on first visit. */
+  @keyframes cnl-install-in {
+    0% {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .animate-cnl-install-in {
+    animation: cnl-install-in 380ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 720px; /* mobile-first; avoid stretching too wide */
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

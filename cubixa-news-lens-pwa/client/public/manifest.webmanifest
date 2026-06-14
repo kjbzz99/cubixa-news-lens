@@ -1,0 +1,57 @@
+{
+  "name": "Cubixa News Lens",
+  "short_name": "News Lens",
+  "description": "복수 AI 에이전트 기반 뉴스 신뢰도 검증",
+  "lang": "ko-KR",
+  "dir": "ltr",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#7c3aed",
+  "background_color": "#f6f4fb",
+  "categories": ["news", "utilities", "productivity"],
+  "icons": [
+    {
+      "src": "/manus-storage/cubixa-9dot-192_feb938bd.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/manus-storage/cubixa-9dot-512_d288c9f0.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/manus-storage/cubixa-9dot-512-maskable_2b346f96.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "share_target": {
+    "action": "/share",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "shortcuts": [
+    {
+      "name": "URL로 검증하기",
+      "short_name": "검증",
+      "description": "기사 URL을 붙여넣어 즉시 분석",
+      "url": "/?action=paste",
+      "icons": [
+        {
+          "src": "/manus-storage/cubixa-9dot-192_feb938bd.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}
